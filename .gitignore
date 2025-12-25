@@ -5,3 +5,6 @@ dist/
 coverage/
 .env
 .env.*
+
+# Synced from repo-depot (regenerated via ./scripts/sync-depot.sh)
+.claude/skills/

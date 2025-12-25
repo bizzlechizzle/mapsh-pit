@@ -1,114 +1,138 @@
-# mapsh-pit
+# Universal Development Standards v0.1.3
 
-GPS waypoint parsing, fuzzy matching, and deduplication CLI tool.
+Consistent, maintainable code across all projects.
 
-## Structure
+> **This file is centrally managed.** Do not modify without explicit user approval.
 
-```
-mapsh-pit/
-├── src/
-│   ├── cli.ts           # CLI commands (parse, dedup, compare, stats, merge, match)
-│   ├── parser.ts        # KML, KMZ, GPX, GeoJSON, CSV parsing
-│   ├── dedup.ts         # Union-Find clustering with safeguards
-│   ├── jaro-winkler.ts  # String similarity with 280+ alias expansions
-│   ├── token-set-ratio.ts # Word-order independent matching
-│   ├── geo-utils.ts     # Haversine distance, US state lookup
-│   └── index.ts         # Public API exports
-├── tests/
-│   ├── cli.test.ts      # CLI integration tests
-│   ├── parser.test.ts   # Parser unit tests
-│   ├── dedup.test.ts    # Deduplication tests
-│   ├── jaro-winkler.test.ts
-│   ├── token-set-ratio.test.ts
-│   ├── geo-utils.test.ts
-│   └── fixtures/        # Test data files
-├── bin/
-│   └── mapsh-pit.js     # CLI entry point
-└── dist/                # Compiled output
-```
+## Instruction Files
 
-## Commands
+| File | Location | Purpose |
+|------|----------|---------|
+| `CLAUDE.md` | Root | Universal rules (this file) |
+| `techguide.md` | Root | Project-specific details (import via `@techguide.md`) |
+| `.claude/rules/*.md` | .claude/rules/ | Modular, path-scoped rules |
 
-```bash
-# Build
-pnpm build
+Files load in order. Missing files are skipped.
 
-# Run tests
-pnpm test
+## Boot Sequence
 
-# Dev mode (tsx)
-pnpm dev parse file.kml
+1. Read this file completely
+2. Read `@techguide.md` if it exists
+3. Read the task
+4. Begin implementation
 
-# After build
-node dist/cli.js parse file.kml
-```
+## Commands & Gotchas
 
-## CLI Usage
+Define in `@techguide.md`. Every project must document:
+- Build, test, lint, and run commands
+- Critical gotchas (non-obvious failures, environment quirks)
+- Troubleshooting steps for common issues
 
-```bash
-# Parse map files
-mapsh-pit parse file.kml file.gpx -o output.json
-mapsh-pit parse *.kmz -f kml -o combined.kml
+Use hooks (settings.json) for formatting/linting—not CLAUDE.md.
 
-# Deduplicate with safeguards
-mapsh-pit dedup *.kml -o deduped.geojson -f geojson
-mapsh-pit dedup *.kml --max-cluster-size 10 --max-diameter 200
-mapsh-pit dedup *.kml --dry-run  # Preview mode
+## Development Rules
 
-# Compare two names
-mapsh-pit compare "Union Station" "Station Union"
+1. **Scope Discipline** — Only implement what the request describes
+2. **Verify Before Done** — Run build and tests; incomplete until passing
+3. **Keep It Simple** — Favor obvious code, minimal abstraction, fewer files
+4. **One Script = One Purpose** — Keep scripts focused (~300 lines guideline)
+5. **Open Source First** — Prefer open tools unless project specifies otherwise
+6. **Binaries Welcome** — Use ffmpeg, exiftool, etc. when appropriate for the environment
+7. **Respect Folder Structure** — Place files in designated directories (templates in `templates/`, scripts in `scripts/`, etc.)
+8. **Build Complete** — No "V2" or deferred features. Plan thoroughly, build once. ("Buy once, cry once")
 
-# Show statistics
-mapsh-pit stats *.kml --alias-stats
+## Security
 
-# Merge without dedup
-mapsh-pit merge *.kml -o merged.geojson
+- Validate all external input at system boundaries (APIs, CLI, file reads)
+- Never log secrets, credentials, or PII
+- Use parameterized queries for databases
+- Escape output to prevent injection (XSS, SQL, command)
 
-# Match against reference
-mapsh-pit match reference.kml target.gpx --min-confidence 70
-```
+## Do Not
 
-## Key Algorithms
+- Invent features beyond what the task authorizes
+- Hardcode paths, credentials, or environment-specific values
+- Leave TODOs or unexplained code in production
+- **Assume when uncertain** — Stop and ask
+- **Modify CLAUDE.md** — This file is managed centrally; changes require explicit approval
 
-1. **Token Set Ratio** - Word-order independent matching
-2. **Jaro-Winkler with Normalization** - Character-level with alias expansion
-3. **Union-Find Clustering** - GPS-based deduplication with safeguards
-4. **Blocking Word Detection** - Prevents North/South false matches
-5. **US State Lookup** - Auto-detects state from GPS coordinates
+## Stop and Ask When
 
-## Dedup Safeguards
+- Task conflicts with a rule in this file
+- Referenced file or path doesn't exist
+- Task scope is unclear or spans multiple features
+- About to delete code without understanding why it exists
+- Schema, API, or breaking change not explicitly authorized
 
-Prevents over-clustering:
-- `--max-cluster-size <n>` - Max points per cluster (default: 20)
-- `--max-diameter <meters>` - Max geographic spread (default: 500m)
-- `--min-confidence <0-100>` - Min match confidence (default: 60)
-- `--dry-run` - Preview mode
+## Code Quality
 
-## Export Formats
+### Prefer
+- Explicit over implicit
+- Pure functions where possible
+- Descriptive names over comments
+- Early returns over deep nesting
 
-- `json` - Raw point array
-- `geojson` - GeoJSON FeatureCollection
-- `kml` - Google Earth KML
-- `gpx` - GPS Exchange Format
-- `csv` - Comma-separated values
-- `table` - Human-readable table
+### Avoid
+- Magic numbers and strings
+- Global mutable state
+- Premature abstraction
 
 ## Testing
 
-All tests use Vitest. Run with `pnpm test`.
+- Write tests for new functionality
+- Run affected tests (files touched or related) before marking complete
+- Test edge cases and error paths
 
-Coverage areas:
-- Haversine distance calculations
-- Jaro-Winkler similarity scores
-- Token Set Ratio algorithm
-- Blocking conflict detection
-- Deduplication clustering
-- Parser (KML, GPX, GeoJSON, CSV)
-- CLI integration tests
+## Git
 
-## Gotchas
+- Atomic commits (one logical change)
+- Messages explain what and why
+- Never force push to main/master
+- Never commit secrets or .env files
 
-- KMZ files are ZIP archives containing KML - uses unzipper
-- CSV delimiter is auto-detected (comma, tab, semicolon, pipe)
-- LineString/Polygon features use first point or centroid
-- Generic names (House, Church) require stricter GPS (25m)
+## Versioning
+
+### repo-depot version
+- Format: `0.MINOR.COMMIT_COUNT` (e.g., `0.1.34`)
+- Calculated automatically from `VERSION` file + git commit count
+- Bump `VERSION` to `0.2` for breaking changes to sync behavior
+- Bump to `1.0` when declared stable
+
+### App versions
+- Format: `MAJOR.MINOR.PATCH` (e.g., `1.0.12`)
+- Each commit that modifies app code **must** increment PATCH by exactly 1
+- **Claude may ONLY increment PATCH** — never change MAJOR or MINOR
+- MINOR/MAJOR bumps require explicit user instruction (e.g., "bump to 0.2.0")
+- **Do not** use git commit counts—version is manually incremented per commit
+- Do not bump version for repo-depot syncs that don't change app logic
+- Apps receive `.depot-version` file indicating synced repo-depot version
+
+**Initialization:**
+- New apps start at `0.1.0` (pre-release) or `1.0.0` (stable launch)
+- Create `VERSION` file in app's root directory containing version as plain text
+- Example: `echo "0.1.0" > VERSION`
+
+**Tracking:**
+- `VERSION` file lives in app's root directory (e.g., `apps/myapp/VERSION`)
+- File contains only the version string, no other content (e.g., `1.0.12`)
+- Read version: `cat VERSION`
+- **Include VERSION bump in the same commit** as your code changes
+
+**What triggers a version bump:**
+- Source code changes → Yes, always
+- Config changes that affect behavior → Yes
+- Test-only or docs-only changes → No
+- Merge commits → Count as 1 commit (bump once, not per merged commit)
+
+## Path-Scoped Rules
+
+Rules in `.claude/rules/` can target specific paths:
+
+```yaml
+---
+paths: src/api/**/*.ts
+---
+# Rules here apply only to matching files
+```
+
+Common globs: `**/*.ts` (all), `src/**/*` (directory), `*.md` (root only)
