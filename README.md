@@ -70,14 +70,18 @@ Find and merge duplicate points based on GPS proximity and name similarity.
 mapsh-pit dedup <files...> [options]
 
 Options:
-  -o, --output <file>         Output file (defaults to stdout)
-  -f, --format <format>       Output format: json, geojson, csv, table (default: json)
-  -g, --gps-threshold <m>     GPS distance threshold in meters (default: 50)
-  -n, --name-threshold <0-1>  Name similarity threshold (default: 0.85)
-  --require-gps               Require GPS match for duplicates
-  --no-smart-match            Disable word-overlap boost
-  -v, --verbose               Show detailed match information
-  -q, --quiet                 Suppress progress output
+  -o, --output <file>           Output file (defaults to stdout)
+  -f, --format <format>         Output format: json, geojson, kml, gpx, csv, table (default: json)
+  -g, --gps-threshold <m>       GPS distance threshold in meters (default: 50)
+  -n, --name-threshold <0-1>    Name similarity threshold (default: 0.85)
+  --require-gps                 Require GPS match for duplicates
+  --no-smart-match              Disable word-overlap boost
+  --max-cluster-size <count>    Max points per cluster (default: 20)
+  --max-diameter <meters>       Max cluster diameter (default: 500)
+  --min-confidence <0-100>      Min confidence to merge (default: 60)
+  --dry-run                     Preview what would be merged
+  -v, --verbose                 Show detailed match information
+  -q, --quiet                   Suppress progress output
 ```
 
 **Examples:**

@@ -14,6 +14,7 @@ export {
   getBoundingBox,
   calculateCentroid,
   isValidCoordinate,
+  getUSStateFromCoords,
 } from './geo-utils.js';
 
 // ============================================================================

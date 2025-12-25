@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * mapcombine CLI
+ * mapsh-pit CLI
  *
  * GPS waypoint parsing, fuzzy matching, and deduplication tool.
  *
@@ -162,7 +162,7 @@ ${placemarks}
       }).join('\n');
 
       return `<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="mapcombine" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx version="1.1" creator="mapsh-pit" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>Exported Points</name>
     <time>${new Date().toISOString()}</time>
@@ -760,7 +760,7 @@ function createMatchCommand(): Command {
 // ============================================================================
 
 const program = new Command()
-  .name('mapcombine')
+  .name('mapsh-pit')
   .description('GPS waypoint parsing, fuzzy matching, and deduplication')
   .version(VERSION);
 
