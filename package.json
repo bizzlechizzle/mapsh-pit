@@ -1,0 +1,60 @@
+{
+  "name": "mapsh-pit",
+  "version": "0.1.0",
+  "description": "GPS waypoint parsing, fuzzy matching, and deduplication CLI tool",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mapsh-pit": "./bin/mapsh-pit.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "gps",
+    "kml",
+    "gpx",
+    "geojson",
+    "waypoint",
+    "fuzzy-matching",
+    "deduplication",
+    "token-set-ratio",
+    "jaro-winkler",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.10",
+    "commander": "^12.1.0",
+    "ora": "^8.1.1",
+    "unzipper": "^0.12.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/unzipper": "^0.10.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.9857, 40.7484]
+      },
+      "properties": {
+        "name": "Empire State Building",
+        "description": "Iconic skyscraper",
+        "state": "NY",
+        "category": "landmark"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-118.3287, 34.1014]
+      },
+      "properties": {
+        "title": "Hollywood Sign",
+        "desc": "Famous landmark",
+        "State": "CA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPoint",
+        "coordinates": [
+          [-122.4194, 37.7749],
+          [-122.4100, 37.7800]
+        ]
+      },
+      "properties": {
+        "Name": "SF MultiPoint",
+        "type": "test"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.0365, 38.8977],
+          [-77.0400, 38.9000],
+          [-77.0450, 38.9050]
+        ]
+      },
+      "properties": {
+        "name": "DC Line"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-104.0, 39.0],
+          [-104.0, 40.0],
+          [-105.0, 40.0],
+          [-105.0, 39.0],
+          [-104.0, 39.0]
+        ]]
+      },
+      "properties": {
+        "name": "Colorado Box"
+      }
+    }
+  ]
+}

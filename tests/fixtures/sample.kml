@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Test Locations</name>
+    <Folder>
+      <name>Historic Sites</name>
+      <Placemark>
+        <name>Old Mill</name>
+        <description>Historic water mill from 1850</description>
+        <styleUrl>#historic</styleUrl>
+        <Point>
+          <coordinates>-122.4194,37.7749,0</coordinates>
+        </Point>
+        <ExtendedData>
+          <Data name="year">
+            <value>1850</value>
+          </Data>
+          <SimpleData name="status">abandoned</SimpleData>
+        </ExtendedData>
+      </Placemark>
+      <Placemark>
+        <name>Railway Station</name>
+        <description>Abandoned railway station</description>
+        <Point>
+          <coordinates>-122.4084,37.7849,10</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Natural</name>
+      <Placemark>
+        <name>Mountain Peak</name>
+        <Point>
+          <coordinates>-122.5,37.8,500</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Placemark>
+      <name>Line Feature</name>
+      <LineString>
+        <coordinates>-122.0,37.0 -122.1,37.1 -122.2,37.2</coordinates>
+      </LineString>
+    </Placemark>
+    <Placemark>
+      <name>Area Feature</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>-122.0,38.0 -122.0,38.1 -122.1,38.1 -122.1,38.0 -122.0,38.0</coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>
