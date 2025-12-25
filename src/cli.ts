@@ -48,6 +48,8 @@ import {
   combinedFuzzyMatch,
 } from './token-set-ratio.js';
 
+import { autoSyncWithMessage } from './auto-sync.js';
+
 import { haversineDistance } from './geo-utils.js';
 
 // ============================================================================
@@ -771,10 +773,21 @@ program.addCommand(createStatsCommand());
 program.addCommand(createMergeCommand());
 program.addCommand(createMatchCommand());
 
-// Show help if no command
-if (process.argv.length <= 2) {
-  program.outputHelp();
-  process.exit(0);
+// Main entry point with auto-sync
+async function main() {
+  // Auto-sync from repo-depot (rate-limited, non-blocking)
+  await autoSyncWithMessage();
+
+  // Show help if no command
+  if (process.argv.length <= 2) {
+    program.outputHelp();
+    process.exit(0);
+  }
+
+  program.parse(process.argv);
 }
 
-program.parse(process.argv);
+main().catch((err) => {
+  console.error('Error:', err.message);
+  process.exit(1);
+});

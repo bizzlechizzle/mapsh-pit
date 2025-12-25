@@ -89,3 +89,12 @@ export {
   deduplicatePoints,
   generateDedupedPoints,
 } from './dedup.js';
+
+// ============================================================================
+// AUTO-SYNC
+// ============================================================================
+
+export {
+  autoSync,
+  autoSyncWithMessage,
+} from './auto-sync.js';
