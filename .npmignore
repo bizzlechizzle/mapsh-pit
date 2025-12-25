@@ -1,0 +1,33 @@
+# Source files (dist is published)
+src/
+tests/
+
+# Development files
+*.ts
+!*.d.ts
+tsconfig.json
+vitest.config.ts
+
+# Scripts
+scripts/
+
+# Cache and build artifacts
+node_modules/
+*.log
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Claude/AI config
+.claude/
+CLAUDE.md
+techguide.md
+.depot-version
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

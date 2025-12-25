@@ -347,6 +347,22 @@ Default thresholds:
 | Generic GPS threshold | 25m | Stricter GPS for generic names |
 | Word-overlap boost | 0.10 | Threshold reduction for word overlap |
 
+## Auto-Sync from repo-depot
+
+mapsh-pit automatically syncs development standards from [repo-depot](https://github.com/bizzlechizzle/repo-depot) on every CLI run:
+
+- **CLAUDE.md** - Universal development standards
+- **Skills** - Claude Code skills (9 skills)
+- **Version tracking** - `.depot-version` file
+
+Sync is rate-limited to once per hour. Force manual sync:
+
+```bash
+./scripts/sync-depot.sh          # Sync now
+./scripts/sync-depot.sh --check  # Check version
+./scripts/sync-depot.sh --force  # Force re-sync
+```
+
 ## Development
 
 ```bash
@@ -359,10 +375,52 @@ pnpm build
 # Run tests
 pnpm test
 
+# Run tests once (CI mode)
+pnpm test:run
+
 # Dev mode (no build required)
 pnpm dev parse test.kml
+
+# Sync from repo-depot
+pnpm sync
 ```
+
+## Project Structure
+
+```
+mapsh-pit/
+├── src/
+│   ├── cli.ts              # CLI commands
+│   ├── parser.ts           # KML, KMZ, GPX, GeoJSON, CSV parsing
+│   ├── dedup.ts            # Union-Find clustering
+│   ├── jaro-winkler.ts     # String similarity (280+ aliases)
+│   ├── token-set-ratio.ts  # Word-order independent matching
+│   ├── geo-utils.ts        # Haversine, US state lookup
+│   ├── auto-sync.ts        # repo-depot auto-sync
+│   └── index.ts            # Public API exports
+├── tests/                  # 180 tests
+├── scripts/
+│   └── sync-depot.sh       # Manual sync script
+├── CLAUDE.md               # Universal standards (from repo-depot)
+├── techguide.md            # Project-specific guide
+└── .depot-version          # Synced repo-depot version
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing`)
+3. Make changes and add tests
+4. Run `pnpm test:run` to verify
+5. Commit with conventional commits
+6. Push and open a PR
+
+## Links
+
+- [GitHub Repository](https://github.com/bizzlechizzle/mapsh-pit)
+- [Issues](https://github.com/bizzlechizzle/mapsh-pit/issues)
+- [repo-depot](https://github.com/bizzlechizzle/repo-depot) - Development standards
 
 ## License
 
-MIT
+MIT - see [LICENSE](LICENSE)

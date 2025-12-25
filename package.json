@@ -15,16 +15,22 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
     "start": "node dist/cli.js",
     "test": "vitest",
+    "test:run": "vitest --run",
     "test:watch": "vitest --watch",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "sync": "./scripts/sync-depot.sh"
   },
   "keywords": [
     "gps",
@@ -36,10 +42,20 @@
     "deduplication",
     "token-set-ratio",
     "jaro-winkler",
-    "cli"
+    "cli",
+    "urbex",
+    "abandoned"
   ],
-  "author": "",
+  "author": "bizzlechizzle",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bizzlechizzle/mapsh-pit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bizzlechizzle/mapsh-pit/issues"
+  },
+  "homepage": "https://github.com/bizzlechizzle/mapsh-pit#readme",
   "dependencies": {
     "@xmldom/xmldom": "^0.8.10",
     "commander": "^12.1.0",
